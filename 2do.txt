@@ -1,0 +1,6 @@
+split image into individual rows
+- add rows to a div background
+- add rows to a canvas
+
+Animate an object allong an S bend
+- 2 X bezzier curves

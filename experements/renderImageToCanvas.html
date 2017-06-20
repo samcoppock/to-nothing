@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Image to use:</p>
+<img id="scream" width="220" height="277" src="../imgs/img_the_scream.jpg" alt="The Scream">
+
+<p>Canvas:</p>
+<canvas id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+window.onload = function() {
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+	
+	image = new Image();
+	image.src = '../imgs/img_the_scream.jpg';
+	
+	image.onload = function() {
+	  //Promise.all([
+		createImageBitmap(this, 0, 0, 32, 32),
+		//createImageBitmap(this, 32, 0, 32, 32)
+	  //]).then(function(sprites) {
+		//ctx.drawImage(image,0,0,220,277);
+		ctx.drawImage(image,0,0,220,50,0,0,220,50);
+		ctx.drawImage(image,0,50,220,50,0,50,220,50);
+		ctx.drawImage(image,0,100,220,50,0,100,220,50);
+		ctx.drawImage(image,0,150,220,50,0,150,220,50);
+		ctx.drawImage(image,0,200,220,50,0,200,220,50);
+		ctx.drawImage(image,0,250,220,50,0,250,220,50);
+	  //});
+	}
+
+}
+</script>
+
+<p><strong>Note:</strong> The canvas tag is not supported in Internet 
+Explorer 8 and earlier versions.</p>
+
+</body>
+</html>
