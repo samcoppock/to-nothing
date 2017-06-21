@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="..\libs\GreenSock-JS\src\minified\TweenMax.min.js"></script>
+		
+		<style>
+			div{
+				height:100px;
+				width:100px;
+				background-color:red;
+				position:absolute;
+				top:0px;
+				left:300px;
+				
+			}
+			
+			#B{
+				background-color:green;
+				left:200px;
+				top:100px;
+			}
+			
+			#C{
+				background-color:blue;
+				left:100px;
+				top:200px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="A"></div>
+		<div id="B"></div>
+		<div id="C"></div>
+	</body>
+	
+	<script type="text/javascript">
+		var objA = document.getElementById("A");
+		var objB = document.getElementById("B");
+		var objC = document.getElementById("C");
+		
+		var timeLine = new TimelineMax();
+		
+		timeLine.add(TweenLite.to(objA, 2, {left:100, opacity:0}));
+		timeLine.add(TweenLite.to(objB,2,{left:100, opacity:0}),1.4);
+		timeLine.add(TweenLite.to(objC,2,{left:100, opacity:0}),3);
+
+	</script>
+	
+</html>

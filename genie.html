@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	#A{
+		height:50px;
+		width:220px;
+		background-color:red;
+		background-image:url("../imgs/img_the_scream.jpg");
+		background-position:0px 0px;
+	}
+	
+	#B{
+		height:50px;
+		width:220px;
+		background-color:red;
+		background-image:url("../imgs/img_the_scream.jpg");
+		background-position:0px -50px;
+	}
+</style>
+<body>
+
+<p>Image to use:</p>
+<img id="scream" width="220" height="277" src="imgs/img_the_scream.jpg" alt="The Scream">
+
+
+
+
+<script>
+window.onload = function() {
+
+	document.getElementById("scream").addEventListener("click", function(){
+		genie.splitImage();
+	});
+
+	var image = document.getElementById("scream");
+	var height = image.height;
+	var rows = height / 5
+	var i = 0 
+	
+
+	
+	
+	var genie = {
+	
+		test: function(){
+			console.log("boo");
+		},
+		
+		splitImage : function(){
+			console.log("splitting");
+			
+			for(;i<rows; i++){
+				console.log(i);
+			}
+			
+			console.log("split complete");
+		
+		}
+	
+	}
+
+
+}
+</script>
+
+</body>
+</html>
