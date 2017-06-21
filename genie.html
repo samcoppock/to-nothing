@@ -2,20 +2,10 @@
 <html>
 
 <style>
-	#A{
-		height:50px;
+	#dest{
+		height:277px;
 		width:220px;
-		background-color:red;
-		background-image:url("../imgs/img_the_scream.jpg");
-		background-position:0px 0px;
-	}
-	
-	#B{
-		height:50px;
-		width:220px;
-		background-color:red;
-		background-image:url("../imgs/img_the_scream.jpg");
-		background-position:0px -50px;
+		background-color:blue;
 	}
 </style>
 <body>
@@ -23,8 +13,9 @@
 <p>Image to use:</p>
 <img id="scream" width="220" height="277" src="imgs/img_the_scream.jpg" alt="The Scream">
 
+<div id="dest"></div>
 
-
+</body>
 
 <script>
 window.onload = function() {
@@ -34,9 +25,21 @@ window.onload = function() {
 	});
 
 	var image = document.getElementById("scream");
+	var destination = document.getElementById("dest");
+	
 	var height = image.height;
 	var rows = height / 5
-	var i = 0 
+	var imageSrc = image.src;
+	destination.style.backgroundImage = "url('" + imageSrc + "')";
+	console.log(imageSrc);
+	
+	var htm = '';
+	//htm += 'no';
+	//htm += 'yes';
+	//destination.innerHTML = htm;
+	
+	
+	
 	
 
 	
@@ -50,10 +53,13 @@ window.onload = function() {
 		splitImage : function(){
 			console.log("splitting");
 			
+			var i = 0 
 			for(;i<rows; i++){
 				console.log(i);
+				htm += '<div class="row_' + i + '" style="width:220px; height:5px; background-image:url(' + imageSrc + '); background-position: 0px -' + i*5 + 'px"></div>'
 			}
 			
+			destination.innerHTML = htm;
 			console.log("split complete");
 		
 		}
@@ -64,5 +70,4 @@ window.onload = function() {
 }
 </script>
 
-</body>
 </html>
