@@ -1,69 +1,107 @@
 <!DOCTYPE html>
 <html>
+	<script src="libs\GreenSock-JS\src\minified\TweenMax.min.js"></script>
+	<script src="libs\jquery\jquery-3.2.1.min.js"></script>
 
-<style>
-	#dest{
-		height:277px;
-		width:220px;
-		background-color:blue;
+	<style>
+	.row{
+		display:block;
+		background-color:green;
+		position:relative;
 	}
-</style>
+
+	</style>
 <body>
 
 <p>Image to use:</p>
-<img id="scream" width="220" height="277" src="imgs/img_the_scream.jpg" alt="The Scream">
 
-<div id="dest"></div>
+<div id="me">
+<img id="scream" width="220" height="277" src="imgs/img_the_scream.jpg" alt="The Scream">
+</div>
+
+<div>
+<img id="pickles" src="imgs/pickles.jpg" alt="The cute one">
+</div>
 
 </body>
 
 <script>
 window.onload = function() {
-
-	document.getElementById("scream").addEventListener("click", function(){
-		genie.splitImage();
+	
+	$('img').on("click",null,function(){
+		genie.splitImage( event );
 	});
 
-	var image = document.getElementById("scream");
-	var destination = document.getElementById("dest");
-	
-	var height = image.height;
-	var rows = height / 5
-	var imageSrc = image.src;
-	destination.style.backgroundImage = "url('" + imageSrc + "')";
-	console.log(imageSrc);
-	
-	var htm = '';
-	//htm += 'no';
-	//htm += 'yes';
-	//destination.innerHTML = htm;
-	
-	
-	
-	
-
-	
-	
 	var genie = {
 	
-		test: function(){
-			console.log("boo");
+		settings:{
+			rowHeight:1,
+			firstStageSpeed:0.5
 		},
 		
-		splitImage : function(){
-			console.log("splitting");
+		containerDiv : null,
+		height : null,
+		width : null,
+		
+		splitImage : function( e ){
+
+			height = e.target.height;
+			width = e.target.width;
+			containerDiv = $(e.target).parent();
+			var imageSrc = e.target.src;
 			
-			var i = 0 
+			var rows = height / this.settings.rowHeight;
+			var htm = '';
+			var i = 0;
+			
 			for(;i<rows; i++){
-				console.log(i);
-				htm += '<div class="row_' + i + '" style="width:220px; height:5px; background-image:url(' + imageSrc + '); background-position: 0px -' + i*5 + 'px"></div>'
+				htm += '<div class="row row_' + i + '" style="width:' + width + 'px; height: ' + this.settings.rowHeight + 'px; background-image:url(' + imageSrc + '); background-position: 0px -' + i*this.settings.rowHeight + 'px"></div>'
 			}
 			
-			destination.innerHTML = htm;
-			console.log("split complete");
+			$(containerDiv).html(htm);
+			
+			this.colapse();
 		
-		}
+		},
 	
+		colapse : function() {
+		
+			var b = $(containerDiv).children();
+			var len = b.length;
+			var i = len -1; 
+			var startTime = 0;
+			
+			var masterTimeLine = new TimelineMax();
+			masterTimeLine.pause();
+			
+			//timeLine.staggerTo(b, 1, {scaleX:0.5, transformOrigin:"50 50"},0.005);
+			
+			//Generate the squeezing effect
+			var squezeTimeLine = new TimelineMax();
+			masterTimeLine.add(squezeTimeLine);
+			
+			
+			for(;i>=0; i--){
+				console.log("tween");
+				startTime = startTime + 0.002;
+				squezeTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {scaleX:0.1, transformOrigin:"50 50"}),startTime );
+				console.log(i);
+			}
+			
+			var HorizontalMoveTimeLine = new TimelineMax();
+			masterTimeLine.add(HorizontalMoveTimeLine,0.5);
+			
+			//Generate Horizontal movement
+			i = len -1;
+			startTime = 0;
+			
+			for(;i>=0; i--){
+				startTime = startTime + 0.002;
+				HorizontalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {left:200, transformOrigin:"50 50"}),startTime );
+			}
+			
+			masterTimeLine.play();
+		}
 	}
 
 
