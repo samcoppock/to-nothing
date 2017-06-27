@@ -86,28 +86,28 @@ window.onload = function() {
 			
 			for(;i>=0; i--){
 				//tweenStartTime = tweenStartTime + 0.002;
-				squezeTimeLine.add( TweenLite.to(inverted_b[i], this.settings.firstStageSpeed, {scaleX:0.05, transformOrigin:"50 50"}),
-				this.curve.getRatio(i/b.length) * 1.5);
+				var bezierRatio = this.curve.getRatio(i/b.length);
+				
+				squezeTimeLine.add( 
+					TweenLite.to(
+						inverted_b[i], 
+						this.settings.firstStageSpeed, 
+						{scaleX:0.01,scaleY:bezierRatio * 5, transformOrigin:"50 50"}
+						),
+						bezierRatio * 0.7
+					);
 				
 				console.log("index is " + i);
 				console.log("curve ratio is " + i/inverted_b.length);
 			}
-			
-			//Generate squeeze Jquery version
-			$(b.get().reverse()).each(function(index){
-				//console.log("index is " + index);
-				//console.log("curve ratio is " + index/b.length);
-				//squezeTimeLine.add( TweenLite.to(this, 50, {scaleX:0.05, transformOrigin:"50 50"}),
-				//genie.curve.getRatio(index/b.length) * 10);
-			})
-						
+					
 			//Generate Horizontal movement
 			i = b.length - 1;
 			tweenStartTime = 0;
 			
 			for(;i>=0; i--){
 				tweenStartTime = tweenStartTime + 0.002;
-				HorizontalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {left:200, transformOrigin:"50 50"}),tweenStartTime );
+				HorizontalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {x:50, transformOrigin:"50 50"}),tweenStartTime );
 			}
 			
 			//Generate vertical movement
@@ -118,13 +118,13 @@ window.onload = function() {
 			for(;i>=0; i--){
 				tweenStartTime = tweenStartTime + 0.002;
 				H_pos = H_pos + 1;
-				verticalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {top:H_pos, transformOrigin:"50 50"}),tweenStartTime )
+				verticalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {y:H_pos, transformOrigin:"50 50"}),tweenStartTime )
 			}
 			
 			//Add embedded timeslines to master timeline
 			masterTimeLine.add(squezeTimeLine,0);
-			masterTimeLine.add(HorizontalMoveTimeLine,"-=0.5");
-			masterTimeLine.add(verticalMoveTimeLine,"-=0.5");
+			masterTimeLine.add(HorizontalMoveTimeLine,0.5);
+			masterTimeLine.add(verticalMoveTimeLine,0.5);
 			
 			masterTimeLine.play();
 		}
