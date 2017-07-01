@@ -77,7 +77,7 @@ window.onload = function() {
 			//setup timelines
 			var masterTimeLine = new TimelineMax({paused:true});
 			var squezeTimeLine = new TimelineMax();
-			var HorizontalMoveTimeLine = new TimelineMax();
+			var movementTimeline = new TimelineMax();
 			var verticalMoveTimeLine = new TimelineMax();
 			
 			//Generate the squeezing effect
@@ -101,30 +101,20 @@ window.onload = function() {
 				console.log("curve ratio is " + i/inverted_b.length);
 			}
 					
-			//Generate Horizontal movement
+			//Generate movement
 			i = b.length - 1;
 			tweenStartTime = 0;
+			var H_pos = 200;
 			
 			for(;i>=0; i--){
-				tweenStartTime = tweenStartTime + 0.002;
-				HorizontalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {x:50, transformOrigin:"50 50"}),tweenStartTime );
-			}
-			
-			//Generate vertical movement
-			i = b.length - 1;
-			tweenStartTime = 0;
-			var H_pos = 500;
-			
-			for(;i>=0; i--){
-				tweenStartTime = tweenStartTime + 0.002;
 				H_pos = H_pos + 1;
-				verticalMoveTimeLine.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {y:H_pos, transformOrigin:"50 50"}),tweenStartTime )
+				tweenStartTime = tweenStartTime + 0.002;
+				movementTimeline.add( TweenLite.to(b[i], this.settings.firstStageSpeed, {x:50, y:H_pos, transformOrigin:"50 50"}),tweenStartTime );
 			}
 			
 			//Add embedded timeslines to master timeline
 			masterTimeLine.add(squezeTimeLine,0);
-			masterTimeLine.add(HorizontalMoveTimeLine,0.5);
-			masterTimeLine.add(verticalMoveTimeLine,0.5);
+			masterTimeLine.add(movementTimeline,0.5);
 			
 			masterTimeLine.play();
 		}
