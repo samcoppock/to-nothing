@@ -9,9 +9,9 @@ window.onload = function() {
 	
 		settings:{
 			rowHeight:1,
-			firstStageSpeed:0.5,
-			horizontalPosition: 500,
-			verticalPosition: 500
+			speed:0.5,
+			horizontalTarget: 500,
+			verticalTarget: 500
 		},
 		
 		containerDiv : null,
@@ -24,6 +24,9 @@ window.onload = function() {
 
 			height = e.target.height;
 			width = e.target.width;
+			
+			this.getSettings( e );
+			
 			containerDiv = $(e.target).parent();
 			var imageSrc = e.target.src;
 			
@@ -39,6 +42,35 @@ window.onload = function() {
 			
 			this.colapse();
 		
+		},
+		
+		getSettings : function( e ){
+			if ( e.target.dataset.speed ){
+				speed = e.target.dataset.speed;
+			} else {
+				speed = this.settings.speed;
+			}
+			
+			if ( e.target.dataset.rowheight ){
+				rowHeight = e.target.dataset.rowheight;
+			} else {
+				rowHeight = this.settings.rowHeight;
+			}
+			
+			if ( e.target.dataset.verticaltarget ){
+				verticalTarget = e.target.dataset.verticaltarget;
+			} else {
+				verticalTarget = this.settings.verticalTarget;
+			}
+			
+			if ( e.target.dataset.horizontaltarget ){
+				horizontalTarget = e.target.dataset.horizontaltarget;
+			} else {
+				horizontalTarget = this.settings.horizontalTarget;
+			}
+			
+			
+			console.log("");
 		},
 	
 		colapse : function() {
@@ -64,7 +96,7 @@ window.onload = function() {
 				squezeTimeLine.add( 
 					TweenLite.to(
 						inverted_b[i], 
-						this.settings.firstStageSpeed, 
+						this.settings.speed, 
 						{scaleX:0.01,scaleY:bezierRatio * 5, transformOrigin:"50 50"}
 						),
 						bezierRatio * 0.7
@@ -77,14 +109,14 @@ window.onload = function() {
 			//Generate movement
 			i = b.length - 1;
 			tweenStartTime = 0;
-			var V_pos = this.settings.verticalPosition;
+			var V_pos = this.settings.verticalTarget;
 			
 			for(;i>=0; i--){
 				V_pos = V_pos + 1;
-				tweenStartTime = tweenStartTime + 0.002 * this.settings.firstStageSpeed;
+				tweenStartTime = tweenStartTime + 0.002 * this.settings.speed;
 				movementTimeline.add( 
-					TweenLite.to(b[i], this.settings.firstStageSpeed, {
-						x:this.settings.horizontalPosition, 
+					TweenLite.to(b[i], this.settings.speed, {
+						x:this.settings.horizontalTarget, 
 						y:V_pos, 
 						transformOrigin:"50 50"})
 				,tweenStartTime );
